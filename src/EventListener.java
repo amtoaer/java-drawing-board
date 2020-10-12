@@ -39,11 +39,9 @@ public class EventListener extends MouseInputAdapter implements ActionListener {
         // 点击的是颜色
         if ("".equals(e.getActionCommand())) {
             selectedColor = instance.getBackground();
-            System.out.println(selectedColor);
         } else {
             // 点击的是操作
             operation = instance.getText();
-            System.out.println(operation);
         }
     }
 
