@@ -5,8 +5,16 @@ import java.awt.*;
 
 public class Drawboard extends JPanel {
     static final long serialVersionUID = 1357997531;
+    private static Drawboard db;
 
-    public Drawboard() {
+    public static Drawboard getInstance() {
+        if (db == null) {
+            db = new Drawboard();
+        }
+        return db;
+    }
+
+    private Drawboard() {
         this.setBackground(Color.WHITE);
         this.drawUI();
         this.bindEvent();
@@ -28,4 +36,13 @@ public class Drawboard extends JPanel {
         this.addMouseMotionListener(el);
         el.setPen(this.getGraphics());
     }
+
+    public void paint(Graphics p) {
+        super.paint(p);
+        EventListener el = EventListener.GetInstance();
+        for (Shape item : el.getHistory()) {
+            item.draw(p);
+        }
+    }
+
 }

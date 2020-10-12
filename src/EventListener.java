@@ -61,6 +61,9 @@ public class EventListener extends MouseInputAdapter implements ActionListener {
     public void mouseReleased(MouseEvent e) {
         x2 = e.getX();
         y2 = e.getY();
+        // 撤销上一张图
+        revert();
+        // 增加新的图
         Shape tmp = new MultiShape(x1, y1, x2, y2);
         history.add(tmp);
         tmp.draw(pen);
@@ -71,12 +74,18 @@ public class EventListener extends MouseInputAdapter implements ActionListener {
         x2 = e.getX();
         y2 = e.getY();
         // 撤销上一张图
-        Shape last = history.remove(history.size() - 1);
-        last.draw(pen, Color.WHITE);
+        revert();
         // 增加新的图
         Shape tmp = new MultiShape(x1, y1, x2, y2);
         history.add(tmp);
         tmp.draw(pen);
+    }
+
+    public void revert() {
+        // 移除最后一次绘图
+        history.remove(history.size() - 1);
+        // 重新绘制
+        Drawboard.getInstance().repaint();
     }
 
     public Color getSelectedColor() {
@@ -89,5 +98,9 @@ public class EventListener extends MouseInputAdapter implements ActionListener {
 
     public void setPen(Graphics pen) {
         this.pen = pen;
+    }
+
+    public List<Shape> getHistory() {
+        return this.history;
     }
 }
