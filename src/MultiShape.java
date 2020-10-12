@@ -25,8 +25,10 @@ public class MultiShape extends Shape {
                 break;
             case "矩形":
                 p.drawRect(x1, y1, x2 - x1, y2 - y1);
+                break;
             case "圆":
                 p.drawOval(x1, y1, x2 - x1, y2 - y1);
+                break;
         }
     }
 }
