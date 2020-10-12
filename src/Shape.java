@@ -17,4 +17,6 @@ public abstract class Shape {
     }
 
     public abstract void draw(Graphics p);
+
+    public abstract void draw(Graphics p, Color customColor);
 }

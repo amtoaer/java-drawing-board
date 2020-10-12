@@ -25,6 +25,7 @@ public class Drawboard extends JPanel {
     private void bindEvent() {
         EventListener el = EventListener.GetInstance();
         this.addMouseListener(el);
+        this.addMouseMotionListener(el);
         el.setPen(this.getGraphics());
     }
 }

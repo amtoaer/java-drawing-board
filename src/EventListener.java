@@ -1,5 +1,6 @@
 import java.awt.event.*;
 import javax.swing.event.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Graphics;
@@ -49,12 +50,30 @@ public class EventListener extends MouseInputAdapter implements ActionListener {
     public void mousePressed(MouseEvent e) {
         x1 = e.getX();
         y1 = e.getY();
+        x2 = e.getX();
+        y2 = e.getY();
+        Shape tmp = new MultiShape(x1, y1, x2, y2);
+        history.add(tmp);
+        tmp.draw(pen);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         x2 = e.getX();
         y2 = e.getY();
+        Shape tmp = new MultiShape(x1, y1, x2, y2);
+        history.add(tmp);
+        tmp.draw(pen);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        x2 = e.getX();
+        y2 = e.getY();
+        // 撤销上一张图
+        Shape last = history.remove(history.size() - 1);
+        last.draw(pen, Color.WHITE);
+        // 增加新的图
         Shape tmp = new MultiShape(x1, y1, x2, y2);
         history.add(tmp);
         tmp.draw(pen);
