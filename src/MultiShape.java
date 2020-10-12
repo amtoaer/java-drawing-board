@@ -7,7 +7,23 @@ public class MultiShape extends Shape {
 
     public void draw(Graphics p) {
         p.setColor(this.selectedColor);
-        // 始终保证x1<=x2,y1<=y2
+        switch (this.operation) {
+            case "铅笔":
+            case "直线":
+                p.drawLine(x1, y1, x2, y2);
+                break;
+            case "矩形":
+                this.swap();
+                p.drawRect(x1, y1, x2 - x1, y2 - y1);
+                break;
+            case "圆":
+                this.swap();
+                p.drawOval(x1, y1, x2 - x1, y2 - y1);
+                break;
+        }
+    }
+
+    private void swap() {
         if (x1 > x2) {
             int tmp = x1;
             x1 = x2;
@@ -17,18 +33,6 @@ public class MultiShape extends Shape {
             int tmp = y1;
             y1 = y2;
             y2 = tmp;
-        }
-        switch (this.operation) {
-            case "铅笔":
-            case "直线":
-                p.drawLine(x1, y1, x2, y2);
-                break;
-            case "矩形":
-                p.drawRect(x1, y1, x2 - x1, y2 - y1);
-                break;
-            case "圆":
-                p.drawOval(x1, y1, x2 - x1, y2 - y1);
-                break;
         }
     }
 }
