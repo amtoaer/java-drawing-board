@@ -11,7 +11,7 @@ public class Colorlist extends JPanel {
         // 为列表使用二行四列的栅格布局
         this.setLayout(new GridLayout(2, 4, 2, 2));
         // 通过颜色数组快速构建前七个按钮
-        Color[] colorArray = { Color.BLACK, Color.BLUE, Color.CYAN, Color.GREEN, Color.PINK, Color.RED, Color.CYAN };
+        Color[] colorArray = { Color.BLACK, Color.BLUE, Color.YELLOW, Color.GREEN, Color.PINK, Color.RED, Color.CYAN };
         for (Color item : colorArray) {
             JButton tmp = new JButton();
             tmp.setBackground(item);
