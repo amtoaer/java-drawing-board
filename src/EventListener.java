@@ -5,8 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.Graphics;
 import java.util.Deque;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 // 该类实现了鼠标事件、键盘事件和按钮点击事件的监听
@@ -22,9 +20,11 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     // 画笔
     private Graphics pen;
     // 所有画过的图
-    private final List<Shape> history = new ArrayList<>();
+    private final Deque<Shape> history = new LinkedList<>();
     // 保存实时按键的栈
     private final Deque<Integer> stack = new LinkedList<>();
+    // 保存按鼠标时的历史状态（用于笔和橡皮擦的撤销）
+    private final Deque<Shape> previous = new LinkedList<>();
 
     private EventListener() {
         // 默认画笔为黑色，选中操作为铅笔
@@ -56,6 +56,8 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
 
     @Override
     public void mousePressed(MouseEvent e) {
+        // 保存该个时刻的最新状态
+        previous.push(history.peek());
         // 按下鼠标时调用的函数
         x1 = e.getX();
         y1 = e.getY();
@@ -70,7 +72,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         x2 = e.getX();
         y2 = e.getY();
         if (!this.operation.equals("铅笔")) {
-            revert();
+            revert(true);
         }
         // 添加新的图
         addShape();
@@ -81,7 +83,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         x2 = e.getX();
         y2 = e.getY();
         if (!this.operation.equals("铅笔")) {
-            revert();
+            revert(true);
             addShape();
         } else {
             addShape();
@@ -94,7 +96,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     public void keyPressed(KeyEvent e) {
         // Ctrl + Z ，触发撤销操作
         if (stack.size() >= 1 && stack.peek() == 17 && e.getKeyCode() == 90) {
-            revert();
+            revert(false);
         }
         // 将按键码压栈
         stack.push(e.getKeyCode());
@@ -110,13 +112,20 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         stack.pop();
     }
 
-    public void revert() {
-        if (history.size() >= 1) {
-            // 移除最后一次绘图
-            history.remove(history.size() - 1);
-            // 重新绘制（repaint实质调用的是paint()函数）
-            Drawboard.getInstance().repaint();
+    // 撤销有两种类型，锁定撤销和非锁定撤销
+    // 锁定撤销时，起点不会被删除，在动态拖拽操作中使用
+    // 非锁定撤销时，起点和边同时被删除，在手动调用的撤销操作中使用
+    public void revert(boolean fixed) {
+        Shape toCompare = fixed ? previous.peek() : previous.poll();
+        Shape tmp;
+        while ((tmp = history.peek()) != null) {
+            if (!tmp.equals(toCompare)) {
+                history.poll();
+            } else {
+                break;
+            }
         }
+        Drawboard.getInstance().repaint();
     }
 
     public Color getSelectedColor() {
@@ -131,7 +140,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         this.pen = pen;
     }
 
-    public List<Shape> getHistory() {
+    public Deque<Shape> getHistory() {
         return this.history;
     }
 
@@ -139,7 +148,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         // 添加新图
         Shape tmp = new MultiShape(x1, y1, x2, y2);
         // 加入历史
-        history.add(tmp);
+        history.push(tmp);
         // 用pen将tmp画在图上
         tmp.draw(pen);
     }
