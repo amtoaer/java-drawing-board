@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-// 该类实现了鼠标事件和按钮点击事件的监听
+// 该类实现了鼠标事件、键盘事件和按钮点击事件的监听
 public class EventListener extends MouseInputAdapter implements ActionListener, KeyListener {
     // 使用单例模式
     private static EventListener i;
@@ -23,13 +23,16 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     private Graphics pen;
     // 所有画过的图
     private final List<Shape> history = new ArrayList<>();
+    // 保存实时按键的栈
     private final Deque<Integer> stack = new LinkedList<>();
 
     private EventListener() {
+        // 默认画笔为黑色，选中操作为铅笔
         selectedColor = Color.BLACK;
         operation = "铅笔";
     }
 
+    // 获取实例的静态方法
     public static EventListener GetInstance() {
         if (i == null) {
             i = new EventListener();
@@ -40,25 +43,26 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton instance = (JButton) e.getSource();
-        // 点击的是颜色
+        // 点击的是颜色（因为颜色按钮没有文字）
         if ("".equals(e.getActionCommand())) {
             selectedColor = instance.getBackground();
         } else {
             // 点击的是操作
             operation = instance.getText();
         }
+        // 将焦点还给绘图区域（没有焦点没有办法响应键盘事件）
         Drawboard.getInstance().requestFocus();
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        // 按下鼠标时调用的函数
         x1 = e.getX();
         y1 = e.getY();
         x2 = e.getX();
         y2 = e.getY();
-        Shape tmp = new MultiShape(x1, y1, x2, y2);
-        history.add(tmp);
-        tmp.draw(pen);
+        // 原地画点，为了和mouseDragged协作实现动态拖拽的效果
+        addShape();
     }
 
     @Override
@@ -67,10 +71,8 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         y2 = e.getY();
         // 撤销上一张图
         revert();
-        // 增加新的图
-        Shape tmp = new MultiShape(x1, y1, x2, y2);
-        history.add(tmp);
-        tmp.draw(pen);
+        // 添加新的图
+        addShape();
     }
 
     @Override
@@ -80,9 +82,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         // 撤销上一张图
         revert();
         // 增加新的图
-        Shape tmp = new MultiShape(x1, y1, x2, y2);
-        history.add(tmp);
-        tmp.draw(pen);
+        addShape();
     }
 
     @Override
@@ -91,6 +91,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         if (stack.size() >= 1 && stack.peek() == 17 && e.getKeyCode() == 90) {
             revert();
         }
+        // 将按键码压栈
         stack.push(e.getKeyCode());
     }
 
@@ -100,6 +101,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
 
     @Override
     public void keyReleased(KeyEvent e) {
+        // 松开按键则弹栈
         stack.pop();
     }
 
@@ -107,7 +109,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         if (history.size() >= 1) {
             // 移除最后一次绘图
             history.remove(history.size() - 1);
-            // 重新绘制
+            // 重新绘制（repaint实质调用的是paint()函数）
             Drawboard.getInstance().repaint();
         }
     }
@@ -126,5 +128,14 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
 
     public List<Shape> getHistory() {
         return this.history;
+    }
+
+    private void addShape() {
+        // 添加新图
+        Shape tmp = new MultiShape(x1, y1, x2, y2);
+        // 加入历史
+        history.add(tmp);
+        // 用pen将tmp画在图上
+        tmp.draw(pen);
     }
 }

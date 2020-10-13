@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
+// 基本图形的抽象类（橡皮擦类和多图形类都从该类继承）
 public abstract class Shape {
     protected int x1, x2, y1, y2;
     private static final EventListener el = EventListener.GetInstance();
@@ -18,5 +19,4 @@ public abstract class Shape {
 
     public abstract void draw(Graphics p);
 
-    public abstract void draw(Graphics p, Color customColor);
 }

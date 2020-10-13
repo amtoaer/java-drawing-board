@@ -1,6 +1,6 @@
 import java.awt.Graphics;
-import java.awt.*;
 
+// 该类可以根据选择操作操作的不同绘制不同种类的图
 public class MultiShape extends Shape {
     public MultiShape(int x1, int y1, int x2, int y2) {
         super(x1, y1, x2, y2);
@@ -12,13 +12,8 @@ public class MultiShape extends Shape {
         this.innerDraw(p);
     }
 
-    @Override
-    public void draw(Graphics p, Color customColor) {
-        p.setColor(customColor);
-        this.innerDraw(p);
-    }
-
     private void swap() {
+        // 保证x1<=x2,y1<=y2，在绘制矩形、圆时需要
         if (x1 > x2) {
             int tmp = x1;
             x1 = x2;
