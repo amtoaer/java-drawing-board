@@ -2,8 +2,12 @@ import java.awt.Graphics;
 
 // 该类可以根据选择操作操作的不同绘制不同种类的图
 public class MultiShape extends Shape {
+    private int x2, y2;
+
     public MultiShape(int x1, int y1, int x2, int y2) {
-        super(x1, y1, x2, y2);
+        super(x1, y1);
+        this.x2 = x2;
+        this.y2 = y2;
     }
 
     @Override

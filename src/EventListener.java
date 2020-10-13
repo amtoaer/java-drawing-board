@@ -71,24 +71,39 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     public void mouseReleased(MouseEvent e) {
         x2 = e.getX();
         y2 = e.getY();
-        if (!this.operation.equals("铅笔")) {
-            revert(true);
+        switch (this.operation) {
+            case "铅笔":
+                addShape();
+                break;
+            case "橡皮擦":
+                addEraser();
+                break;
+            default:
+                revert(true);
+                addShape();
+                break;
         }
-        // 添加新的图
-        addShape();
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         x2 = e.getX();
         y2 = e.getY();
-        if (!this.operation.equals("铅笔")) {
-            revert(true);
-            addShape();
-        } else {
-            addShape();
-            x1 = x2;
-            y1 = y2;
+        switch (this.operation) {
+            case "铅笔":
+                addShape();
+                x1 = x2;
+                y1 = y2;
+                break;
+            case "橡皮擦":
+                addEraser();
+                x1 = x2;
+                y1 = y2;
+                break;
+            default:
+                revert(true);
+                addShape();
+                break;
         }
     }
 
@@ -147,6 +162,15 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     private void addShape() {
         // 添加新图
         Shape tmp = new MultiShape(x1, y1, x2, y2);
+        // 加入历史
+        history.push(tmp);
+        // 用pen将tmp画在图上
+        tmp.draw(pen);
+    }
+
+    private void addEraser() {
+        // 添加新图
+        Shape tmp = new Eraser(x1, y1);
         // 加入历史
         history.push(tmp);
         // 用pen将tmp画在图上
