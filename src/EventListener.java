@@ -69,8 +69,9 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     public void mouseReleased(MouseEvent e) {
         x2 = e.getX();
         y2 = e.getY();
-        // 撤销上一张图
-        revert();
+        if (!this.operation.equals("铅笔")) {
+            revert();
+        }
         // 添加新的图
         addShape();
     }
@@ -79,10 +80,14 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     public void mouseDragged(MouseEvent e) {
         x2 = e.getX();
         y2 = e.getY();
-        // 撤销上一张图
-        revert();
-        // 增加新的图
-        addShape();
+        if (!this.operation.equals("铅笔")) {
+            revert();
+            addShape();
+        } else {
+            addShape();
+            x1 = x2;
+            y1 = y2;
+        }
     }
 
     @Override
