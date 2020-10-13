@@ -21,7 +21,7 @@ public class Drawboard extends JPanel {
     }
 
     private void drawUI() {
-        JFrame window = new JFrame();
+        JFrame window = new JFrame("画板");
         window.setSize(800, 600);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLayout(new BorderLayout());
@@ -34,6 +34,7 @@ public class Drawboard extends JPanel {
         EventListener el = EventListener.GetInstance();
         this.addMouseListener(el);
         this.addMouseMotionListener(el);
+        this.addKeyListener(el);
         el.setPen(this.getGraphics());
     }
 

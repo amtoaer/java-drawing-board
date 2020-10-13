@@ -4,11 +4,13 @@ import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Graphics;
+import java.util.Deque;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 // 该类实现了鼠标事件和按钮点击事件的监听
-public class EventListener extends MouseInputAdapter implements ActionListener {
+public class EventListener extends MouseInputAdapter implements ActionListener, KeyListener {
     // 使用单例模式
     private static EventListener i;
     // 点击点和落点的坐标
@@ -20,7 +22,8 @@ public class EventListener extends MouseInputAdapter implements ActionListener {
     // 画笔
     private Graphics pen;
     // 所有画过的图
-    private List<Shape> history = new ArrayList<>();
+    private final List<Shape> history = new ArrayList<>();
+    private final Deque<Integer> stack = new LinkedList<>();
 
     private EventListener() {
         selectedColor = Color.BLACK;
@@ -44,6 +47,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener {
             // 点击的是操作
             operation = instance.getText();
         }
+        Drawboard.getInstance().requestFocus();
     }
 
     @Override
@@ -81,11 +85,31 @@ public class EventListener extends MouseInputAdapter implements ActionListener {
         tmp.draw(pen);
     }
 
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // Ctrl + Z ，触发撤销操作
+        if (stack.size() >= 1 && stack.peek() == 17 && e.getKeyCode() == 90) {
+            revert();
+        }
+        stack.push(e.getKeyCode());
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        stack.pop();
+    }
+
     public void revert() {
-        // 移除最后一次绘图
-        history.remove(history.size() - 1);
-        // 重新绘制
-        Drawboard.getInstance().repaint();
+        if (history.size() >= 1) {
+            // 移除最后一次绘图
+            history.remove(history.size() - 1);
+            // 重新绘制
+            Drawboard.getInstance().repaint();
+        }
     }
 
     public Color getSelectedColor() {
