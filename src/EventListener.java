@@ -8,7 +8,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 // 该类实现了鼠标事件、键盘事件和按钮点击事件的监听
-public class EventListener extends MouseInputAdapter implements ActionListener, KeyListener {
+public class EventListener extends MouseInputAdapter implements ActionListener, KeyListener, ChangeListener {
     // 使用单例模式
     private static EventListener i;
     // 点击点和落点的坐标
@@ -17,6 +17,8 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     private Color selectedColor;
     // 当前使用的操作
     private String operation;
+    // 当前线条粗细
+    private int width;
     // 画笔
     private Graphics pen;
     // 所有画过的图
@@ -30,6 +32,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         // 默认画笔为黑色，选中操作为铅笔
         selectedColor = Color.BLACK;
         operation = "铅笔";
+        width = 1;
     }
 
     // 获取实例的静态方法
@@ -131,6 +134,12 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         stack.pop();
     }
 
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        JSlider jslider = (JSlider) e.getSource();
+        this.width = jslider.getValue();
+    }
+
     // 撤销有两种类型，锁定撤销和非锁定撤销
     // 锁定撤销时，起点不会被删除，在动态拖拽操作中使用
     // 非锁定撤销时，起点和边同时被删除，在手动调用的撤销操作中使用
@@ -153,6 +162,10 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
 
     public String getOperation() {
         return this.operation;
+    }
+
+    public int getWidth() {
+        return this.width;
     }
 
     public void setPen(Graphics pen) {

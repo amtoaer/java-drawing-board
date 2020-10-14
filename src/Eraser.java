@@ -10,6 +10,7 @@ public class Eraser extends Shape {
     @Override
     public void draw(Graphics p) {
         p.setColor(this.selectedColor);
-        p.fillOval(x1, y1, 30, 30);
+        // 以(x1,y1)为圆心，this.width*3为半径的白色实心圆
+        p.fillOval(x1 - this.width * 3, y1 - this.width * 3, this.width * 6, this.width * 6);
     }
 }

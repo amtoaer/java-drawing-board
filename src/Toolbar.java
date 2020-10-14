@@ -14,6 +14,8 @@ public class Toolbar extends JPanel {
             tmp.addActionListener(el);
             this.add(tmp);
         }
+        // 添加线条粗细调整
+        this.add(new Linewidth());
         // 添加颜色列表
         this.add(new Colorlist());
     }

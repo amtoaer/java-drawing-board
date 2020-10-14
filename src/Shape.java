@@ -7,10 +7,12 @@ public abstract class Shape {
     private static final EventListener el = EventListener.GetInstance();
     protected Color selectedColor;
     protected String operation;
+    protected int width;
 
     public Shape(int x1, int y1) {
         selectedColor = el.getSelectedColor();
         operation = el.getOperation();
+        width = el.getWidth();
         this.x1 = x1;
         this.y1 = y1;
     }

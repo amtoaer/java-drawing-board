@@ -1,4 +1,6 @@
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
 
 // 该类可以根据选择操作操作的不同绘制不同种类的图
 public class MultiShape extends Shape {
@@ -11,8 +13,10 @@ public class MultiShape extends Shape {
     }
 
     @Override
-    public void draw(Graphics p) {
+    public void draw(Graphics g) {
+        Graphics2D p = (Graphics2D) g;
         p.setColor(this.selectedColor);
+        p.setStroke(new BasicStroke(this.width));
         this.innerDraw(p);
     }
 
