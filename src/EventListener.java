@@ -138,6 +138,8 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     public void stateChanged(ChangeEvent e) {
         JSlider jslider = (JSlider) e.getSource();
         this.width = jslider.getValue();
+        // 将焦点还给绘图区域（没有焦点没有办法响应键盘事件）
+        Drawboard.getInstance().requestFocus();
     }
 
     // 撤销有两种类型，锁定撤销和非锁定撤销
