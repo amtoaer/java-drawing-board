@@ -4,11 +4,12 @@
 </p>
 <p align="center">
 <img src="https://img.shields.io/badge/Java-15-orange?style=for-the-badge">
-<img src="https://img.shields.io/github/repo-size/amtoaer/java-drawing-board?style=for-the-badge&color=red">
+<img src="https://img.shields.io/github/languages/code-size/amtoaer/java-drawing-board?style=for-the-badge&color=red">
 <img src="https://img.shields.io/github/v/release/amtoaer/java-drawing-board?style=for-the-badge">
 <img src="https://img.shields.io/github/license/amtoaer/java-drawing-board?style=for-the-badge&color=blueviolet">
 <img src="https://img.shields.io/github/workflow/status/amtoaer/java-drawing-board/release?style=for-the-badge">
 </p>
+
 
 ## 项目介绍
 该仓库为Java语言程序设计大作业，队伍成员有[amtoaer](https://github.com/amtoaer)、[RayK](https://github.com/Ray-Keiyaku)和[clover3333](https://github.com/clover3333)。
