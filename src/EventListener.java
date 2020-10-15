@@ -119,6 +119,9 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         // Ctrl + Z ，触发撤销操作
         if (stack.size() >= 1 && stack.peek() == 17 && e.getKeyCode() == 90) {
             revert(false);
+            // Ctrl + S，触发保存动作
+        } else if (stack.size() >= 1 && stack.peek() == 17 && e.getKeyCode() == 83) {
+            Utils.savePanelAsJpg("/home/amtoaer/test.png", Drawboard.getInstance());
         }
         // 将按键码压栈
         stack.push(e.getKeyCode());
