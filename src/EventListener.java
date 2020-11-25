@@ -15,6 +15,8 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     private int x1, x2, y1, y2;
     // 当前选中的颜色
     private Color selectedColor;
+    // 当前背景色
+    private Color backgroundColor;
     // 当前使用的操作
     private String operation;
     // 当前线条粗细
@@ -29,8 +31,9 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     private final Deque<Shape> previous = new LinkedList<>();
 
     private EventListener() {
-        // 默认画笔为黑色，选中操作为铅笔
+        // 默认画笔为黑色，背景色为白色，选中操作为铅笔
         selectedColor = Color.BLACK;
+        backgroundColor = Color.WHITE;
         operation = "铅笔";
         width = 1;
     }
@@ -123,8 +126,18 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         } else if (stack.size() >= 1 && stack.peek() == 17 && e.getKeyCode() == 83) {
             Utils.savePanelAsImage(Drawboard.getInstance());
         } else if (stack.size() >= 1 && stack.peek() == 17 && e.getKeyCode() == 81) {
-            // Ctrl + Q，手动触发为画板设置背景色（懒得加按钮了）
-            Drawboard.getInstance().setBackground(selectedColor);
+            // Ctrl + Q，手动触发为画板设置背景色
+            backgroundColor = selectedColor;
+            // 设置背景色
+            Drawboard.getInstance().setBackground(backgroundColor);
+            for (var item : history) {
+                if (item instanceof Eraser) {
+                    // 刷新历史橡皮到当前背景颜色
+                    item.refresh();
+                }
+            }
+            // 重新绘制
+            Drawboard.getInstance().repaint();
         }
         // 将按键码压栈
         stack.push(e.getKeyCode());
@@ -170,6 +183,10 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
 
     public String getOperation() {
         return this.operation;
+    }
+
+    public Color getBackgroundColor() {
+        return this.backgroundColor;
     }
 
     public int getWidth() {
