@@ -122,6 +122,9 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
             // Ctrl + S，触发保存动作
         } else if (stack.size() >= 1 && stack.peek() == 17 && e.getKeyCode() == 83) {
             Utils.savePanelAsImage(Drawboard.getInstance());
+        } else if (stack.size() >= 1 && stack.peek() == 17 && e.getKeyCode() == 81) {
+            // Ctrl + Q，手动触发为画板设置背景色（懒得加按钮了）
+            Drawboard.getInstance().setBackground(selectedColor);
         }
         // 将按键码压栈
         stack.push(e.getKeyCode());
