@@ -29,7 +29,7 @@ public class Toolbar extends JPanel {
         this.setLayout(new BorderLayout());
 
         EventListener el = EventListener.getInstance();
-        String[] shapeArray = { "铅笔", "直线", "矩形", "圆", "文本", "橡皮擦" };
+        String[] shapeArray = { "铅笔", "直线", "矩形", "圆", "文本", "橡皮擦", "帮助" };
         // 添加所有的按钮并添加按钮点击事件监听
         for (String item : shapeArray) {
             JButton tmp = new JButton(item);
