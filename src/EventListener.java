@@ -130,10 +130,10 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         // 有大于一个按键并且上一个按键为Ctrl
         if (stack.size() >= 1 && stack.peek() == 17) {
             switch (e.getKeyCode()) {
-                case 90 -> revert(false); // Z
-                case 83 -> Drawboard.getInstance().savePanelAsImage(); // S
-                case 81 -> setBackgroundColor(); // Q
-                case 79 -> Drawboard.getInstance().loadImageToPanel(); // O
+                case 90 -> revert(false); // Ctrl+Z -> 撤销
+                case 83 -> Drawboard.getInstance().savePanelAsImage(); // Ctrl+S -> 保存图片
+                case 81 -> setBackgroundColor(); // Ctrl+Q -> 设置背景色
+                case 79 -> Drawboard.getInstance().loadImageToPanel(); // Ctrl+O -> 打开图片
             }
         }
         // 将按键码压栈
