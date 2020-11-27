@@ -8,7 +8,7 @@ public class TextShape extends Shape {
 
     public TextShape(int x1, int y1) {
         super(x1, y1);
-        this.content = Toolbar.getTextString();
+        this.content = Toolbar.getInstance().getTextString();
     }
 
     @Override

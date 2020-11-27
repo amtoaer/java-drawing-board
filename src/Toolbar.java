@@ -9,7 +9,8 @@ public class Toolbar extends JPanel {
     // 单例模式
     private static Toolbar tb;
     static final long serialVersionUID = 12345;
-    private static JTextField jtf1 = new JTextField("在此输入文本内容", 20);
+
+    private JTextField jtf1 = new JTextField("在此输入文本内容", 20);
 
     private Toolbar() {
         JPanel northPanel = new JPanel();
@@ -33,7 +34,6 @@ public class Toolbar extends JPanel {
         // Toolbar布局
         this.add(northPanel, BorderLayout.NORTH);
         this.add(southPanel, BorderLayout.SOUTH);
-
     }
 
     // 获取实例的静态方法
@@ -45,7 +45,7 @@ public class Toolbar extends JPanel {
     }
 
     // 获取文本
-    public static String getTextString() {
-        return jtf1.getText();
+    public String getTextString() {
+        return this.jtf1.getText();
     }
 }
