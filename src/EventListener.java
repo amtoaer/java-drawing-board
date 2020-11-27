@@ -46,6 +46,14 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         return i;
     }
 
+    // 清除所有状态并重新绘制
+    public void clear() {
+        history.clear();
+        stack.clear();
+        previous.clear();
+        Drawboard.getInstance().repaint();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton instance = (JButton) e.getSource();
@@ -119,25 +127,14 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // Ctrl + Z ，触发撤销操作
-        if (stack.size() >= 1 && stack.peek() == 17 && e.getKeyCode() == 90) {
-            revert(false);
-            // Ctrl + S，触发保存动作
-        } else if (stack.size() >= 1 && stack.peek() == 17 && e.getKeyCode() == 83) {
-            Utils.savePanelAsImage(Drawboard.getInstance());
-        } else if (stack.size() >= 1 && stack.peek() == 17 && e.getKeyCode() == 81) {
-            // Ctrl + Q，手动触发为画板设置背景色
-            backgroundColor = selectedColor;
-            // 设置背景色
-            Drawboard.getInstance().setBackground(backgroundColor);
-            for (var item : history) {
-                if (item instanceof Eraser) {
-                    // 刷新历史橡皮到当前背景颜色
-                    item.refresh();
-                }
+        // 有大于一个按键并且上一个按键为Ctrl
+        if (stack.size() >= 1 && stack.peek() == 17) {
+            switch (e.getKeyCode()) {
+                case 90 -> revert(false); // Z
+                case 83 -> Drawboard.getInstance().savePanelAsImage(); // S
+                case 81 -> setBackgroundColor(); // Q
+                case 79 -> Drawboard.getInstance().loadImageToPanel(); // O
             }
-            // 重新绘制
-            Drawboard.getInstance().repaint();
         }
         // 将按键码压栈
         stack.push(e.getKeyCode());
@@ -208,6 +205,22 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         history.add(tmp);
         // 用pen将tmp画在图上
         tmp.draw(pen);
+    }
+
+    // 设置背景色
+    public void setBackgroundColor() {
+        backgroundColor = selectedColor;
+        // 设置背景色
+        Drawboard instance = Drawboard.getInstance();
+        instance.setBackground(backgroundColor);
+        for (var item : history) {
+            if (item instanceof Eraser) {
+                // 刷新历史橡皮到当前背景颜色
+                item.refresh();
+            }
+        }
+        // 重新绘制
+        instance.repaint();
     }
 
     private void addEraser() {
