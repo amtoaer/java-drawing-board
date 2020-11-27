@@ -73,12 +73,13 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
                 this.setBackgroundColor();
             }
         } else {
-            // 点击的是操作
-            operation = instance.getText();
-            //当选择“帮助”操作时
-            if(operation.equals("帮助")) {
-            	JOptionPane.showInternalMessageDialog(null,  Utils.getHelpMessage(),"帮助",JOptionPane.INFORMATION_MESSAGE);
+            // 选择帮助操作时输出帮助信息并return
+            if (instance.getText().equals("帮助")) {
+                showHelpMessage();
+                return;
             }
+            // 否则将操作赋值给参数
+            operation = instance.getText();
         }
         // 将焦点还给绘图区域（没有焦点没有办法响应键盘事件）
         Drawboard.getInstance().requestFocus();
@@ -160,7 +161,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
                 case 83 -> Drawboard.getInstance().savePanelAsImage(); // Ctrl+S -> 保存图片
                 case 79 -> Drawboard.getInstance().loadImageToPanel(); // Ctrl+O -> 打开图片
                 case 81 -> this.clear(true); // Ctrl+Q -> 清空历史
-                case 72 -> JOptionPane.showInternalMessageDialog(null,  Utils.getHelpMessage(),"帮助",JOptionPane.INFORMATION_MESSAGE); // Ctrl+H -> 弹出帮助信息
+                case 72 -> showHelpMessage();// Ctrl+H -> 弹出帮助信息
             }
         }
         // 将按键码压栈
@@ -264,5 +265,9 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         history.add(tmp);
         // 用pen将tmp画在图上
         tmp.draw(pen);
+    }
+
+    private void showHelpMessage() {
+        JOptionPane.showInternalMessageDialog(null, Utils.getHelpMessage(), "帮助", JOptionPane.INFORMATION_MESSAGE);
     }
 }
