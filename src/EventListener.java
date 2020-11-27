@@ -157,10 +157,9 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
                 case 79 -> Drawboard.getInstance().loadImageToPanel(); // Ctrl+O -> 打开图片
                 case 81 -> this.clear(true); // Ctrl+Q -> 清空历史
                 case 72 -> JOptionPane.showInternalMessageDialog(null, "帮助", Utils.getHelpMessage(),
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.INFORMATION_MESSAGE); // Ctrl+H -> 弹出帮助信息
             }
         }
-        System.out.println(e.getKeyCode());
         // 将按键码压栈
         stack.push(e.getKeyCode());
     }
