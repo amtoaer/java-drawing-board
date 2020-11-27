@@ -101,6 +101,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         } else {
             addShape();
         }
+        Drawboard.getInstance().requestFocus();
     }
 
     @Override
