@@ -25,4 +25,9 @@ class Utils {
         // 返回字体的family
         return set.stream().map(item -> item.getFamily()).collect(Collectors.toList());
     }
+
+    public static String getHelpMessage() {
+        // 帮助信息
+        return "";
+    }
 }
