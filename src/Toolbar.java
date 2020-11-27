@@ -36,8 +36,6 @@ public class Toolbar extends JPanel {
             tmp.addActionListener(el);
             northPanel.add(tmp);
         }
-        // 添加线条粗细调整
-        northPanel.add(new Linewidth());
         // 添加颜色列表
         northPanel.add(new Colorlist());
         // 用于判断设置前景色还是设置背景色
@@ -47,9 +45,11 @@ public class Toolbar extends JPanel {
         // 加入到同一个按钮组
         bg.add(fore);
         bg.add(back);
-        // 添加单选框到toolbar的第二行
-        southPanel.add(fore);
-        southPanel.add(back);
+        // 添加单选框
+        northPanel.add(fore);
+        northPanel.add(back);
+        // 添加线条粗细调整到toolbar的第二行
+        southPanel.add(new Linewidth());
         // 添加字体选择器到toolbar的第二行
         setComboBox(Utils.getSystemFonts());
         southPanel.add(fontChooser);
