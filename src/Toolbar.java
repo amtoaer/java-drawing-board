@@ -1,11 +1,12 @@
 import java.awt.BorderLayout;
-
+import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import java.awt.Font;
 
 // 该类用于构建工具栏
 public class Toolbar extends JPanel {
@@ -14,11 +15,13 @@ public class Toolbar extends JPanel {
     static final long serialVersionUID = 12345;
 
     // 文本输入文本框
-    private JTextField jtf1 = new JTextField("在此输入文本内容", 20);
+    private JTextField jtf1 = new JTextField("Input Content Here", 20);
     // “前景色”单选框
     JRadioButton fore;
     // 字体选择器
-    JComboBox<String> jcb1 = new JComboBox<String>();
+    JComboBox<String> fontChooser = new JComboBox<>();
+    // 字号选择器
+    JComboBox<Integer> sizeChooser = new JComboBox<>();
 
     private Toolbar() {
         JPanel northPanel = new JPanel();
@@ -47,14 +50,16 @@ public class Toolbar extends JPanel {
         // 添加单选框到toolbar的第二行
         southPanel.add(fore);
         southPanel.add(back);
+        // 添加字体选择器到toolbar的第二行
+        setComboBox(Utils.getSystemFonts());
+        southPanel.add(fontChooser);
+        // 添加字号选择器到toolbar的第二行
+        for (int i = 12; i <= 30; i++) {
+            sizeChooser.addItem(Integer.valueOf(i));
+        }
+        southPanel.add(sizeChooser);
         // 添加文本框到toolbar的第二行
         southPanel.add(jtf1);
-        // 添加字体选择器到toolbar的第二行
-        String[] font = { "xx0", "xx1", "xx2", "xx3", "xx4", "xx5" };
-        for (String item : font) {
-            jcb1.addItem(item);
-        }
-        southPanel.add(jcb1);
         // Toolbar布局
         this.add(northPanel, BorderLayout.NORTH);
         this.add(southPanel, BorderLayout.SOUTH);
@@ -76,5 +81,19 @@ public class Toolbar extends JPanel {
     // 当前选中的是否是前景色
     public boolean isForebackgroundSelected() {
         return this.fore.isSelected();
+    }
+
+    public void setComboBox(List<String> list) {
+        for (var item : list) {
+            this.fontChooser.addItem(item);
+        }
+    }
+
+    public Font getSelectedFont() {
+        return Utils.map.get(this.fontChooser.getSelectedItem());
+    }
+
+    public int getSelectedSize() {
+        return (Integer) this.sizeChooser.getSelectedItem();
     }
 }
