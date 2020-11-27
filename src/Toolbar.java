@@ -54,9 +54,10 @@ public class Toolbar extends JPanel {
         setComboBox(Utils.getSystemFonts());
         southPanel.add(fontChooser);
         // 添加字号选择器到toolbar的第二行
-        for (int i = 12; i <= 30; i++) {
+        for (int i = 9; i <= 72; i++) {
             sizeChooser.addItem(Integer.valueOf(i));
         }
+        sizeChooser.setSelectedIndex(7);
         southPanel.add(sizeChooser);
         // 添加文本框到toolbar的第二行
         southPanel.add(jtf1);
