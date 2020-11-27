@@ -75,6 +75,10 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         } else {
             // 点击的是操作
             operation = instance.getText();
+            //当选择“帮助”操作时
+            if(operation.equals("帮助")) {
+            	printInstruction();
+            }
         }
         // 将焦点还给绘图区域（没有焦点没有办法响应键盘事件）
         Drawboard.getInstance().requestFocus();
