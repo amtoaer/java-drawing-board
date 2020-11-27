@@ -1,7 +1,9 @@
 import java.awt.BorderLayout;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 // 该类用于构建工具栏
@@ -11,6 +13,8 @@ public class Toolbar extends JPanel {
     static final long serialVersionUID = 12345;
 
     private JTextField jtf1 = new JTextField("在此输入文本内容", 20);
+    // “前景色”单选框
+    JRadioButton fore;
 
     private Toolbar() {
         JPanel northPanel = new JPanel();
@@ -29,6 +33,16 @@ public class Toolbar extends JPanel {
         northPanel.add(new Linewidth());
         // 添加颜色列表
         northPanel.add(new Colorlist());
+        // 用于判断设置前景色还是设置背景色
+        ButtonGroup bg = new ButtonGroup();
+        fore = new JRadioButton("前景色", true);
+        JRadioButton back = new JRadioButton("背景色");
+        // 加入到同一个按钮组
+        bg.add(fore);
+        bg.add(back);
+        // 加入到toolbar的第二行
+        southPanel.add(fore);
+        southPanel.add(back);
         // 添加文本框
         southPanel.add(jtf1);
         // Toolbar布局
@@ -47,5 +61,10 @@ public class Toolbar extends JPanel {
     // 获取文本
     public String getTextString() {
         return this.jtf1.getText();
+    }
+
+    // 当前选中的是否是前景色
+    public boolean isForebackgroundSelected() {
+        return this.fore.isSelected();
     }
 }

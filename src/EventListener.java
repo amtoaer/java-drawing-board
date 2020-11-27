@@ -59,7 +59,15 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         JButton instance = (JButton) e.getSource();
         // 点击的是颜色（因为颜色按钮没有文字）
         if ("".equals(e.getActionCommand())) {
-            selectedColor = instance.getBackground();
+            if (Toolbar.getInstance().isForebackgroundSelected()) {
+                // 设置前景色
+                selectedColor = instance.getBackground();
+            } else {
+                // 设置背景色
+                backgroundColor = instance.getBackground();
+                // 刷新画板
+                this.setBackgroundColor();
+            }
         } else {
             // 点击的是操作
             operation = instance.getText();
@@ -142,7 +150,6 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
             switch (e.getKeyCode()) {
                 case 90 -> revert(false); // Ctrl+Z -> 撤销
                 case 83 -> Drawboard.getInstance().savePanelAsImage(); // Ctrl+S -> 保存图片
-                case 81 -> setBackgroundColor(); // Ctrl+Q -> 设置背景色
                 case 79 -> Drawboard.getInstance().loadImageToPanel(); // Ctrl+O -> 打开图片
             }
         }
@@ -219,8 +226,6 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
 
     // 设置背景色
     public void setBackgroundColor() {
-        backgroundColor = selectedColor;
-        // 设置背景色
         Drawboard instance = Drawboard.getInstance();
         instance.setBackground(backgroundColor);
         for (var item : history) {
