@@ -75,6 +75,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
             // 选择帮助操作时输出帮助信息并return
             if (instance.getText().equals("帮助")) {
                 showHelpMessage();
+                Drawboard.getInstance().requestFocus();
                 return;
             }
             // 否则将操作赋值给参数
