@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -12,9 +13,12 @@ public class Toolbar extends JPanel {
     private static Toolbar tb;
     static final long serialVersionUID = 12345;
 
+    // 文本输入文本框
     private JTextField jtf1 = new JTextField("在此输入文本内容", 20);
     // “前景色”单选框
     JRadioButton fore;
+    // 字体选择器
+    JComboBox<String> jcb1 = new JComboBox<String>();
 
     private Toolbar() {
         JPanel northPanel = new JPanel();
@@ -40,11 +44,17 @@ public class Toolbar extends JPanel {
         // 加入到同一个按钮组
         bg.add(fore);
         bg.add(back);
-        // 加入到toolbar的第二行
+        // 添加单选框到toolbar的第二行
         southPanel.add(fore);
         southPanel.add(back);
-        // 添加文本框
+        // 添加文本框到toolbar的第二行
         southPanel.add(jtf1);
+        // 添加字体选择器到toolbar的第二行
+        String[] font = { "xx0", "xx1", "xx2", "xx3", "xx4", "xx5" };
+        for (String item : font) {
+            jcb1.addItem(item);
+        }
+        southPanel.add(jcb1);
         // Toolbar布局
         this.add(northPanel, BorderLayout.NORTH);
         this.add(southPanel, BorderLayout.SOUTH);
