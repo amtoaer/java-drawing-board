@@ -1,6 +1,5 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.BasicStroke;
 import java.awt.Font;
 
 // 该类可以根据选择操作操作的不同绘制不同种类的图
