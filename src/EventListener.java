@@ -47,10 +47,14 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     }
 
     // 清除所有状态并重新绘制
-    public void clear() {
+    public void clear(boolean clearFile) {
         history.clear();
         stack.clear();
         previous.clear();
+        if (clearFile) {
+            // 清除之前打开的文件
+            Drawboard.getInstance().clearFile();
+        }
         Drawboard.getInstance().repaint();
     }
 
@@ -151,6 +155,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
                 case 90 -> revert(false); // Ctrl+Z -> 撤销
                 case 83 -> Drawboard.getInstance().savePanelAsImage(); // Ctrl+S -> 保存图片
                 case 79 -> Drawboard.getInstance().loadImageToPanel(); // Ctrl+O -> 打开图片
+                case 81 -> this.clear(true); // Ctrl+Q -> 清空历史
             }
         }
         // 将按键码压栈

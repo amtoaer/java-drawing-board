@@ -16,7 +16,7 @@ public class Drawboard extends JPanel {
     static final long serialVersionUID = 1357997531;
     // 同样使用单例模式
     private static Drawboard db;
-    private BufferedImage image;
+    private BufferedImage image = null;
 
     // 获得实例的静态函数
     public static Drawboard getInstance() {
@@ -122,10 +122,15 @@ public class Drawboard extends JPanel {
             // 读取该张图片
             image = ImageIO.read(new File(filePath));
             // 清除所有历史
-            EventListener.getInstance().clear();
+            EventListener.getInstance().clear(false);
         } catch (Exception e) {
             e.printStackTrace();
             return;
         }
+    }
+
+    public void clearFile() {
+        // 移除内部的图片缓存
+        this.image = null;
     }
 }
