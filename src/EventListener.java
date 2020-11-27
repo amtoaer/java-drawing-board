@@ -80,6 +80,8 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
         // 原地画点，为了和mouseDragged协作实现动态拖拽的效果
         if (this.operation.equals("橡皮擦")) {
             addEraser();
+        } else if (this.operation.equals("文本")) {
+            addText();
         } else {
             addShape();
         }
@@ -95,6 +97,10 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
                 break;
             case "橡皮擦":
                 addEraser();
+                break;
+            case "文本":
+                revert(true);
+                addText();
                 break;
             default:
                 revert(true);
@@ -117,6 +123,10 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
                 addEraser();
                 x1 = x2;
                 y1 = y2;
+                break;
+            case "文本":
+                revert(true);
+                addText();
                 break;
             default:
                 revert(true);
@@ -226,6 +236,15 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     private void addEraser() {
         // 添加新图
         Shape tmp = new Eraser(x1, y1);
+        // 加入历史
+        history.add(tmp);
+        // 用pen将tmp画在图上
+        tmp.draw(pen);
+    }
+
+    private void addText() {
+        // 添加新文本
+        Shape tmp = new TextShape(x2, y2);
         // 加入历史
         history.add(tmp);
         // 用pen将tmp画在图上

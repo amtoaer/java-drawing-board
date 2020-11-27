@@ -44,7 +44,7 @@ public class Drawboard extends JPanel {
         window.setSize(800, 600);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLayout(new BorderLayout());
-        window.add(new Toolbar(), BorderLayout.NORTH);
+        window.add(Toolbar.GetInstance(), BorderLayout.NORTH);
         window.add(this, BorderLayout.CENTER);
         window.setVisible(true);
     }
