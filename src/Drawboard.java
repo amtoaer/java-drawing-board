@@ -41,7 +41,7 @@ public class Drawboard extends JPanel {
 
     private void drawUI() {
         JFrame window = new JFrame("画板");
-        window.setSize(800, 600);
+        window.setSize(900, 675);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLayout(new BorderLayout());
         window.add(Toolbar.getInstance(), BorderLayout.NORTH);
