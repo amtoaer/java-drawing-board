@@ -49,7 +49,6 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     // 清除所有状态并重新绘制
     public void clear(boolean clearFile) {
         history.clear();
-        stack.clear();
         previous.clear();
         if (clearFile) {
             // 清除之前打开的文件
