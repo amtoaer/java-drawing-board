@@ -7,7 +7,7 @@ public class Colorlist extends JPanel {
 
     public Colorlist() {
         // 得到监听器实例
-        EventListener el = EventListener.GetInstance();
+        EventListener el = EventListener.getInstance();
         // 为列表使用二行四列的栅格布局
         this.setLayout(new GridLayout(2, 4, 2, 2));
         // 通过颜色数组快速构建前七个按钮

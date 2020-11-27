@@ -16,7 +16,7 @@ public class Toolbar extends JPanel {
         JPanel southPanel = new JPanel();
         this.setLayout(new BorderLayout());
 
-        EventListener el = EventListener.GetInstance();
+        EventListener el = EventListener.getInstance();
         String[] shapeArray = { "铅笔", "直线", "矩形", "圆", "文本", "橡皮擦" };
         // 添加所有的按钮并添加按钮点击事件监听
         for (String item : shapeArray) {
@@ -37,7 +37,7 @@ public class Toolbar extends JPanel {
     }
 
     // 获取实例的静态方法
-    public static Toolbar GetInstance() {
+    public static Toolbar getInstance() {
         if (tb == null) {
             tb = new Toolbar();
         }

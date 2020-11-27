@@ -39,7 +39,7 @@ public class EventListener extends MouseInputAdapter implements ActionListener, 
     }
 
     // 获取实例的静态方法
-    public static EventListener GetInstance() {
+    public static EventListener getInstance() {
         if (i == null) {
             i = new EventListener();
         }

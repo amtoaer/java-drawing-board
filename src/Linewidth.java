@@ -12,7 +12,7 @@ public class Linewidth extends JPanel {
         slider.setMajorTickSpacing(4);
         slider.setMinorTickSpacing(1);
         slider.setPaintTicks(true);
-        EventListener el = EventListener.GetInstance();
+        EventListener el = EventListener.getInstance();
         slider.addChangeListener(el);
         this.add(slider);
     }

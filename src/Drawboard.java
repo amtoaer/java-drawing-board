@@ -44,14 +44,14 @@ public class Drawboard extends JPanel {
         window.setSize(800, 600);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLayout(new BorderLayout());
-        window.add(Toolbar.GetInstance(), BorderLayout.NORTH);
+        window.add(Toolbar.getInstance(), BorderLayout.NORTH);
         window.add(this, BorderLayout.CENTER);
         window.setVisible(true);
     }
 
     private void bindEvent() {
         // 得到监听器实例
-        EventListener el = EventListener.GetInstance();
+        EventListener el = EventListener.getInstance();
         // 添加鼠标/鼠标移动/键盘的监听器
         // （因为el实现了鼠标MouseListener、鼠标移动MouseMotionListener、键盘KeyListener的接口，所以可以这样写）
         this.addMouseListener(el);
@@ -69,7 +69,7 @@ public class Drawboard extends JPanel {
         if (image != null) {
             p.drawImage(image, 0, 0, null);
         }
-        EventListener el = EventListener.GetInstance();
+        EventListener el = EventListener.getInstance();
         // 遍历绘图历史，绘制该图形
         for (Shape item : el.getHistory()) {
             item.draw(p);
@@ -122,7 +122,7 @@ public class Drawboard extends JPanel {
             // 读取该张图片
             image = ImageIO.read(new File(filePath));
             // 清除所有历史
-            EventListener.GetInstance().clear();
+            EventListener.getInstance().clear();
         } catch (Exception e) {
             e.printStackTrace();
             return;
