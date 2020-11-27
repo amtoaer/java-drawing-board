@@ -35,6 +35,8 @@ public class Drawboard extends JPanel {
         this.bindEvent();
         // 不打开文件
         image = null;
+        // 得到窗口焦点
+        this.requestFocus();
     }
 
     private void drawUI() {
