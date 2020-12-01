@@ -10,14 +10,18 @@
 <img src="https://img.shields.io/github/workflow/status/amtoaer/java-drawing-board/release?style=for-the-badge">
 </p>
 
-
 ## 项目介绍
-该仓库为Java语言程序设计大作业，队伍成员有[amtoaer](https://github.com/amtoaer)、[RayK](https://github.com/Ray-Keiyaku)和[clover3333](https://github.com/clover3333)。
+
+该仓库为 Java 语言程序设计大作业，队伍成员有[amtoaer](https://github.com/amtoaer)、[RayK](https://github.com/Reilkay)和[clover3333](https://github.com/clover3333)。
+
 ## 运行使用
-下载[release界面](https://github.com/amtoaer/java-drawing-board/releases)的最新版本`DrawBoard.jar`，使用以下命令运行：
+
+下载[release 界面](https://github.com/amtoaer/java-drawing-board/releases)的最新版本`DrawBoard.jar`，使用以下命令运行：
+
 ```bash
 java -jar DrawBoard.jar
 ```
+
 ## 当前功能
 
 - [x] 绘制直线、矩形、圆等离散图
@@ -60,10 +64,12 @@ java -jar DrawBoard.jar
 ## 版本发布
 
 该仓库已经进行了`CI`的配置，对于开发人员，可以通过**为某次`commit`添加`tag`并`push`到仓库**来触发自动构建，以基础版本的构建为例：
+
 ```bash
 git tag -a '0.1.0' -m '基础版本'
 git push --tags
 ```
+
 ## 许可证
 
 MIT LICENSE.
